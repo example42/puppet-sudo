@@ -1,0 +1,66 @@
+# Class: sudo::params
+#
+# This class defines default parameters used by the main module class sudo
+# Operating Systems differences in names and paths are addressed here
+#
+# == Variables
+#
+# Refer to sudo class for the variables defined here.
+#
+# == Usage
+#
+# This class is not intended to be used directly.
+# It may be imported or inherited by other classes
+#
+class sudo::params {
+
+  ### Application related parameters
+
+  $package = $::operatingsystem ? {
+    default => 'sudo',
+  }
+
+  # A dedicated config_dir is available from sudo version >= 1.7.2
+  $config_dir = $::operatingsystem ? {
+    /(?i:Ubuntu)/                   => $::operatingsystemrelease ? {
+      '8.04'  => undef,
+      default => '/etc/sudoers.d',
+    },
+    /(?i:Debian)/                   => $::operatingsystemrelease ? {
+      '4'  => undef,
+      default => '/etc/sudoers.d',
+    },
+    /(?i:RedHat|Centos|Scientific)/ => $::operatingsystemrelease ? {
+      '4'  => undef,
+      default => '/etc/sudoers.d',
+    },
+    default => '/etc/sudoers.d',
+  }
+
+  $config_file = $::operatingsystem ? {
+    default => '/etc/sudoers',
+  }
+
+  $config_file_mode = $::operatingsystem ? {
+    default => '0400',
+  }
+
+  $config_file_owner = $::operatingsystem ? {
+    default => 'root',
+  }
+
+  $config_file_group = $::operatingsystem ? {
+    default => 'root',
+  }
+
+  # General Settings
+  $my_class = ''
+  $source = ''
+  $source_dir = undef
+  $source_dir_purge = 'false'
+  $template = ''
+  $options = ''
+  $debug = false
+  $audit_only = false
+
+}
