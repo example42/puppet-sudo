@@ -3,6 +3,7 @@
 This is a Puppet module for sudo based on the second generation layout ("NextGen") of Example42 Puppet Modules.
 
 Made by Alessandro Franceschi / Lab42
+
 Based on the sudo module of CamptoCamp: https://github.com/camptocamp/puppet-sudo
 
 Official site: http://www.example42.com
@@ -20,7 +21,7 @@ The configuration of the sudoers file(s) can be done following different approch
 - Manage directly the /etc/sudoers file with the source or template arguments
 - Manage the whole /etc/sudoers.d/ directory content with the source_dir argument
 - Manage single entries in /etc/sudoers.d/ with the sudo::directive define (and eventually the main /etc/sudoers file with custom source/template)
-
+ 
 * Use custom sources for main config file 
 
         class { 'sudo':
