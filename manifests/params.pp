@@ -42,7 +42,7 @@ class sudo::params {
   }
 
   $config_file_mode = $::operatingsystem ? {
-    default => '0400',
+    default => '0440',
   }
 
   $config_file_owner = $::operatingsystem ? {
