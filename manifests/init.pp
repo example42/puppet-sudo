@@ -146,6 +146,9 @@ class sudo (
       purge   => $sudo::bool_source_dir_purge,
       replace => $sudo::manage_file_replace,
       audit   => $sudo::manage_audit,
+      mode    => $sudo::config_file_mode,
+      owner   => $sudo::config_file_owner,
+      group   => $sudo::config_file_group,
     }
   } else {
     # Basic /etc/sudoers header for old versions of sudo ( < 1.7.2 )
