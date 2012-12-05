@@ -123,20 +123,20 @@ class sudo (
     name   => $sudo::package,
   }
 
-  file { 'sudo.conf':
-    ensure  => 'present',
-    path    => $sudo::config_file,
-    mode    => $sudo::config_file_mode,
-    owner   => $sudo::config_file_owner,
-    group   => $sudo::config_file_group,
-    require => Package['sudo'],
-    source  => $sudo::manage_file_source,
-    content => $sudo::manage_file_content,
-    replace => $sudo::manage_file_replace,
-    audit   => $sudo::manage_audit,
-  }
-
   if $sudo::config_dir {
+    file { 'sudo.conf':
+      ensure  => 'present',
+      path    => $sudo::config_file,
+      mode    => $sudo::config_file_mode,
+      owner   => $sudo::config_file_owner,
+      group   => $sudo::config_file_group,
+      require => Package['sudo'],
+      source  => $sudo::manage_file_source,
+      content => $sudo::manage_file_content,
+      replace => $sudo::manage_file_replace,
+      audit   => $sudo::manage_audit,
+    }
+
     # The whole sudo configuration directory can be recursively overriden
     file { 'sudo.dir':
       ensure  => directory,
