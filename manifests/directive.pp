@@ -56,6 +56,11 @@ define sudo::directive (
       notify  => Exec["sudo-syntax-check for file $dname"],
       require => Package["sudo"],
     }
+    exec { "sudo-syntax-check for file $dname":
+      command     => "visudo -c -f ${sudo::config_dir}/${order}_${dname} || ( rm -f ${sudo::config_dir}/${order}_${dname} && exit 1)",
+      refreshonly => true,
+      path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+    }
 
   } else {
 
@@ -68,12 +73,6 @@ define sudo::directive (
       require => Package["sudo"],
     }
 
-  }
-
-  exec { "sudo-syntax-check for file $dname":
-    command     => "visudo -c -f ${sudo::config_dir}/${order}_${dname} || ( rm -f ${sudo::config_dir}/${order}_${dname} && exit 1)",
-    refreshonly => true,
-    path        => '/bin:/usr/bin:/sbin:/usr/sbin',
   }
 
 }

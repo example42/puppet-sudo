@@ -60,6 +60,9 @@
 # [*package*]
 #   The name of sudo package
 #
+# [*config_dir*]
+#   Configuration directory. Use false to use concat instead.
+#
 # [*config_file*]
 #   Main configuration file path
 #
@@ -86,6 +89,7 @@ class sudo (
   $debug               = params_lookup( 'debug' , 'global' ),
   $audit_only          = params_lookup( 'audit_only' , 'global' ),
   $package             = params_lookup( 'package' ),
+  $config_dir          = params_lookup( 'config_dir' ),
   $config_file         = params_lookup( 'config_file' ),
   $config_file_mode    = params_lookup( 'config_file_mode' ),
   $config_file_owner   = params_lookup( 'config_file_owner' ),
@@ -122,20 +126,20 @@ class sudo (
     name   => $sudo::package,
   }
 
-  file { 'sudo.conf':
-    ensure  => 'present',
-    path    => $sudo::config_file,
-    mode    => $sudo::config_file_mode,
-    owner   => $sudo::config_file_owner,
-    group   => $sudo::config_file_group,
-    require => Package['sudo'],
-    source  => $sudo::manage_file_source,
-    content => $sudo::manage_file_content,
-    replace => $sudo::manage_file_replace,
-    audit   => $sudo::manage_audit,
-  }
-
   if $sudo::config_dir {
+    file { 'sudo.conf':
+      ensure  => 'present',
+      path    => $sudo::config_file,
+      mode    => $sudo::config_file_mode,
+      owner   => $sudo::config_file_owner,
+      group   => $sudo::config_file_group,
+      require => Package['sudo'],
+      source  => $sudo::manage_file_source,
+      content => $sudo::manage_file_content,
+      replace => $sudo::manage_file_replace,
+      audit   => $sudo::manage_audit,
+    }
+
     # The whole sudo configuration directory can be recursively overriden
     file { 'sudo.dir':
       ensure  => directory,
