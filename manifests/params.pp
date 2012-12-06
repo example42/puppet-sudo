@@ -27,7 +27,8 @@ class sudo::params {
       default => '/etc/sudoers.d',
     },
     /(?i:Debian)/                   => $::operatingsystemrelease ? {
-      '4'  => false,
+      '4'     => false,
+      /^5\./  => false,
       default => '/etc/sudoers.d',
     },
     /(?i:RedHat|Centos|Scientific)/ => $::operatingsystemrelease ? {
