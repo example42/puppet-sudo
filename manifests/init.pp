@@ -60,6 +60,9 @@
 # [*package*]
 #   The name of sudo package
 #
+# [*config_dir*]
+#   Configuration directory. Use false to use concat instead.
+#
 # [*config_file*]
 #   Main configuration file path
 #
