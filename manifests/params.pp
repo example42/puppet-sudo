@@ -23,15 +23,16 @@ class sudo::params {
   # A dedicated config_dir is available from sudo version >= 1.7.2
   $config_dir = $::operatingsystem ? {
     /(?i:Ubuntu)/                   => $::operatingsystemrelease ? {
-      '8.04'  => undef,
+      '8.04'  => false,
       default => '/etc/sudoers.d',
     },
     /(?i:Debian)/                   => $::operatingsystemrelease ? {
-      '4'  => undef,
+      '4'     => false,
+      /^5\./  => false,
       default => '/etc/sudoers.d',
     },
     /(?i:RedHat|Centos|Scientific)/ => $::operatingsystemrelease ? {
-      '4'  => undef,
+      '4'  => false,
       default => '/etc/sudoers.d',
     },
     default => '/etc/sudoers.d',
