@@ -1,7 +1,7 @@
 # = Define: sudo::directive
 #
 # This defines places a directive for the sudoers file
-# On old versions of sudo ( < 1.7.2 ) it places a line in 
+# On old versions of sudo ( < 1.7.2 ) it places a line in
 # /etc/sudoers (The Concat module is required for it)
 # On more recent versions it just places a file in /etc/sudoers.d
 #
@@ -50,27 +50,27 @@ define sudo::directive (
       ensure  => $ensure,
       owner   => root,
       group   => root,
-      mode    => 0440,
+      mode    => '0440',
       content => $manage_content,
       source  => $manage_source,
-      notify  => Exec["sudo-syntax-check for file $dname"],
-      require => Package["sudo"],
+      notify  => Exec["sudo-syntax-check for file ${dname}"],
+      require => Package['sudo'],
     }
 
   } else {
 
-    concat::fragment { "$dname":
+    concat::fragment { $dname:
       ensure  => $ensure,
       order   => $order,
       target  => $sudo::config_file,
-      content => $manage_content, 
+      content => $manage_content,
       source  => $manage_source,
-      require => Package["sudo"],
+      require => Package['sudo'],
     }
 
   }
 
-  exec { "sudo-syntax-check for file $dname":
+  exec { "sudo-syntax-check for file ${dname}":
     command     => "visudo -c -f ${sudo::config_dir}/${order}_${dname} || ( rm -f ${sudo::config_dir}/${order}_${dname} && exit 1)",
     refreshonly => true,
     path        => '/bin:/usr/bin:/sbin:/usr/sbin',

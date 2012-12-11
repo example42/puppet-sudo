@@ -57,7 +57,7 @@ class sudo::params {
   $my_class = ''
   $source = ''
   $source_dir = undef
-  $source_dir_purge = 'false'
+  $source_dir_purge = false
   $template = ''
   $options = ''
   $debug = false
