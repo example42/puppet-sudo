@@ -25,7 +25,7 @@ define sudo::directive (
   $ensure  = present,
   $content = '',
   $source  = '',
-  $order   = '20',
+  $order   = '20'
 ) {
 
   include sudo
