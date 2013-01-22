@@ -186,7 +186,7 @@ class sudo (
   ### Debugging, if enabled ( debug => true )
   if $sudo::bool_debug == true {
     file { 'debug_sudo':
-      ensure  => $sudo::manage_file,
+      ensure  => present,
       path    => "${settings::vardir}/debug-sudo",
       mode    => '0640',
       owner   => 'root',
