@@ -68,7 +68,7 @@ define sudo::directive (
       ensure  => $ensure,
       order   => $order,
       target  => $sudo::config_file,
-      content => $manage_content,
+      content => "$manage_content\n",
       source  => $manage_source,
       require => Package['sudo'],
     }
