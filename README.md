@@ -1,4 +1,4 @@
-= Puppet module: sudo
+# Puppet module: sudo
 
 This is a Puppet module for sudo based on the second generation layout ("NextGen") of Example42 Puppet Modules.
 
@@ -16,7 +16,7 @@ This module requires functions provided by the Example42 Puppi module (you need 
 
 For detailed info about the logic and usage patterns of Example42 modules check the DOCS directory on Example42 main modules set.
 
-== USAGE 
+## USAGE 
 The configuration of the sudoers file(s) can be done following different approches:
 - Manage directly the /etc/sudoers file with the source or template arguments
 - Manage the whole /etc/sudoers.d/ directory content with the source_dir argument
