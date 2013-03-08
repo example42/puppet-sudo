@@ -61,3 +61,5 @@ The configuration of the sudoers file(s) can be done following different approch
         }
 
 
+
+[![Build Status](https://travis-ci.org/example42/puppet-sudo.png?branch=master)](https://travis-ci.org/example42/puppet-sudo)
