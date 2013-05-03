@@ -36,6 +36,14 @@
 #   Note source and template parameters are mutually exclusive: don't use both
 #   Can be defined also by the (top scope) variable $sudo_template
 #
+# [*content*]
+#   Defines the content of the main configuration file, to be used as alternative
+#   to template when the content is populated on other ways.
+#   If defined, snmpd main config file has: content => $content
+#   Note: source, template and content are mutually exclusive.
+#   If a template is defined, that has precedence on the content parameter
+#
+#
 # [*options*]
 #   An hash of custom options to be used in templates for arbitrary settings.
 #   Can be defined also by the (top scope) variable $sudo_options
@@ -85,6 +93,7 @@ class sudo (
   $source_dir          = params_lookup( 'source_dir' ),
   $source_dir_purge    = params_lookup( 'source_dir_purge' ),
   $template            = params_lookup( 'template' ),
+  $content             = params_lookup( 'content' ),
   $options             = params_lookup( 'options' ),
   $debug               = params_lookup( 'debug' , 'global' ),
   $audit_only          = params_lookup( 'audit_only' , 'global' ),
@@ -116,7 +125,10 @@ class sudo (
   }
 
   $manage_file_content = $sudo::template ? {
-    ''        => undef,
+    ''        => $sudo::content ? {
+      ''      => undef,
+      default => $sudo::content,
+    },
     default   => template($sudo::template),
   }
 

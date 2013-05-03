@@ -18,7 +18,7 @@ For detailed info about the logic and usage patterns of Example42 modules check 
 
 ## USAGE 
 The configuration of the sudoers file(s) can be done following different approches:
-- Manage directly the /etc/sudoers file with the source or template arguments
+- Manage directly the /etc/sudoers file with the source, template or content arguments
 - Manage the whole /etc/sudoers.d/ directory content with the source_dir argument
 - Manage single entries in /etc/sudoers.d/ with the sudo::directive define (and eventually the main /etc/sudoers file with custom source/template)
  
@@ -40,6 +40,14 @@ The configuration of the sudoers file(s) can be done following different approch
 
         class { 'sudo':
           template => 'example42/sudo/sudo.conf.erb',
+        }
+
+* Manage directly the content of the main config file. Note that template has precedence over content.
+
+        class { 'snmpd':
+          content => inline_template(
+            file( "$settings::modulepath/example42/templates/sudo/sudo.conf.erb-${hostname}",
+                  "$settings::modulepath/example42/templates/sudo/sudo.conf.erb" ) ),
         }
 
 * Use default sudo class and specific sudo::directive entries

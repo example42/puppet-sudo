@@ -61,6 +61,7 @@ class sudo::params {
   $source_dir = undef
   $source_dir_purge = false
   $template = ''
+  $content = ''
   $options = ''
   $debug = false
   $audit_only = false
