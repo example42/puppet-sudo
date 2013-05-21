@@ -44,7 +44,7 @@ The configuration of the sudoers file(s) can be done following different approch
 
 * Manage directly the content of the main config file. Note that template has precedence over content.
 
-        class { 'snmpd':
+        class { 'sudo':
           content => inline_template(
             file( "$settings::modulepath/example42/templates/sudo/sudo.conf.erb-${hostname}",
                   "$settings::modulepath/example42/templates/sudo/sudo.conf.erb" ) ),
