@@ -38,26 +38,34 @@ define sudo::directive (
     default   => $source,
   }
 
+  # add a line break at the end, as missing that can make the file invalid
   $manage_content = $content ? {
     ''        => undef,
-    default   => $content,
+    default   => "${content}\n",
   }
 
 
   if $sudo::config_dir {
+    $base_name = "${sudo::config_dir}/${order}_${dname}"
+    file {
+      $base_name:
+        ensure  => $ensure,
+        owner   => root,
+        group   => root,
+        mode    => '0440',
+        content => $manage_content,
+        source  => $manage_source,
+        notify  => Exec["sudo-syntax-check for file ${dname}"],
+        require => Package['sudo'];
 
-    file { "${sudo::config_dir}/${order}_${dname}":
-      ensure  => $ensure,
-      owner   => root,
-      group   => root,
-      mode    => '0440',
-      content => $manage_content,
-      source  => $manage_source,
-      notify  => Exec["sudo-syntax-check for file ${dname}"],
-      require => Package['sudo'],
+      # Remove the .broken file which can be left over by the sudo-syntax-check.
+      # This runs intentionally before the syntax-check to leave the file around for debugging.
+      "${base_name}.broken":
+        ensure => absent,
+        before => Exec["sudo-syntax-check for file ${dname}"];
     }
     exec { "sudo-syntax-check for file $dname":
-      command     => "visudo -c -f ${sudo::config_dir}/${order}_${dname} || ( rm -f ${sudo::config_dir}/${order}_${dname} && exit 1)",
+      command     => "visudo -c -f ${base_name} || ( mv -f ${base_name} ${base_name}.broken && exit 1 )",
       refreshonly => true,
       path        => '/bin:/usr/bin:/sbin:/usr/sbin',
     }
