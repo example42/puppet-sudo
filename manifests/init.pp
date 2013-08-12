@@ -39,7 +39,7 @@
 # [*content*]
 #   Defines the content of the main configuration file, to be used as alternative
 #   to template when the content is populated on other ways.
-#   If defined, snmpd main config file has: content => $content
+#   If defined, sudo main config file has: content => $content
 #   Note: source, template and content are mutually exclusive.
 #   If a template is defined, that has precedence on the content parameter
 #
