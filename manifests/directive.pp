@@ -7,6 +7,10 @@
 #
 # == Parameters
 #
+# [*content*]
+#   Sets the value of content parameter for the sudo fragment.
+#   Can be set as an array (joined with newlines)
+#
 # [*source*]
 #   Sets the value of source parameter for the sudo fragment
 #
@@ -41,7 +45,7 @@ define sudo::directive (
   # add a line break at the end, as missing that can make the file invalid
   $manage_content = $content ? {
     ''        => undef,
-    default   => "${content}\n",
+    default   => inline_template('<%= [@content].flatten.join("\n") + "\n" %>'),
   }
 
 
