@@ -68,7 +68,7 @@ define sudo::directive (
         ensure => absent,
         before => Exec["sudo-syntax-check for file ${dname}"];
     }
-    exec { "sudo-syntax-check for file $dname":
+    exec { "sudo-syntax-check for file ${dname}":
       command     => "visudo -c -f ${base_name} || ( mv -f ${base_name} ${base_name}.broken && exit 1 )",
       refreshonly => true,
       path        => '/bin:/usr/bin:/sbin:/usr/sbin',
@@ -80,7 +80,7 @@ define sudo::directive (
       ensure  => $ensure,
       order   => $order,
       target  => $sudo::config_file,
-      content => "$manage_content\n",
+      content => "${manage_content}\n",
       source  => $manage_source,
       require => Package['sudo'],
     }

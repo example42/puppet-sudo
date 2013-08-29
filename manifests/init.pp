@@ -169,7 +169,7 @@ class sudo (
       }
     }
   } else {
-    
+
     include concat::setup
 
     # Basic /etc/sudoers header for old versions of sudo ( < 1.7.2 )
