@@ -8,4 +8,6 @@ source 'https://github.com/example42/puppet-sudo'
 summary 'Puppet module for sudo'
 description 'This module installs and manages sudo'
 dependency 'example42/puppi', '>=2.0.0'
-dependency 'ripienaar/concat', '>=0.0.1'
+dependency 'puppetlabs/stdlib', '>=4.1.0'
+dependency 'puppetlabs/concat', '>=1.0.0'
+
