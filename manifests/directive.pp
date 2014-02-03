@@ -54,9 +54,9 @@ define sudo::directive (
     file {
       $base_name:
         ensure  => $ensure,
-        owner   => root,
-        group   => root,
-        mode    => '0440',
+        owner   => $sudo::config_file_owner,
+        group   => $sudo::config_file_group,
+        mode    => $sudo::config_file_mode,
         content => $manage_content,
         source  => $manage_source,
         notify  => Exec["sudo-syntax-check for file ${dname}"],
