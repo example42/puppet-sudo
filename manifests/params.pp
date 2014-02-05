@@ -36,10 +36,12 @@ class sudo::params {
       /^5/    => false,
       default => '/etc/sudoers.d',
     },
+    'FreeBSD' => '/usr/local/etc/sudoers.d',
     default => '/etc/sudoers.d',
   }
 
   $config_file = $::operatingsystem ? {
+    'FreeBSD' => '/usr/local/etc/sudoers',
     default => '/etc/sudoers',
   }
 
@@ -52,6 +54,7 @@ class sudo::params {
   }
 
   $config_file_group = $::operatingsystem ? {
+    'FreeBSD' => 'wheel',
     default => 'root',
   }
 
