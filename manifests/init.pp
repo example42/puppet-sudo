@@ -132,9 +132,18 @@ class sudo (
     default   => template($sudo::template),
   }
 
+  # On Solaris, sudo is already part of base install
+  # but not registered as a package. Ensuring the package to
+  # be absent won't do any harm and makes sure the resource
+  # Package['sudo'] is available for dependencies
+  $package_ensure = $::operatingsystem ? {
+    /(?i:Solaris)/ => 'absent',
+    default        => 'present',
+  }
+
   ### Managed resources
   package { 'sudo':
-    ensure => 'present',
+    ensure => $package_ensure,
     name   => $sudo::package,
   }
 

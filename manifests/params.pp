@@ -17,7 +17,7 @@ class sudo::params {
   ### Application related parameters
 
   $package = $::operatingsystem ? {
-    default => 'sudo',
+    default        => 'sudo',
   }
 
   # A dedicated config_dir is available from sudo version >= 1.7.2
@@ -36,13 +36,13 @@ class sudo::params {
       /^5/    => false,
       default => '/etc/sudoers.d',
     },
-    'FreeBSD' => '/usr/local/etc/sudoers.d',
-    default => '/etc/sudoers.d',
+    /(?i:FreeBSD)/  => '/usr/local/etc/sudoers.d',
+    default         => '/etc/sudoers.d',
   }
 
   $config_file = $::operatingsystem ? {
-    'FreeBSD' => '/usr/local/etc/sudoers',
-    default => '/etc/sudoers',
+    /(?i:FreeBSD)/ => '/usr/local/etc/sudoers',
+    default        => '/etc/sudoers',
   }
 
   $config_file_mode = $::operatingsystem ? {
