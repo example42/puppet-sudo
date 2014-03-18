@@ -68,5 +68,6 @@ class sudo::params {
   $options = ''
   $debug = false
   $audit_only = false
+  $version = ''
 
 }
