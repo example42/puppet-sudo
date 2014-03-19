@@ -102,7 +102,8 @@ class sudo (
   $config_file         = params_lookup( 'config_file' ),
   $config_file_mode    = params_lookup( 'config_file_mode' ),
   $config_file_owner   = params_lookup( 'config_file_owner' ),
-  $config_file_group   = params_lookup( 'config_file_group' )
+  $config_file_group   = params_lookup( 'config_file_group' ),
+  $version             = params_lookup( 'version' )
   ) inherits sudo::params {
 
   $bool_source_dir_purge=any2bool($source_dir_purge)
@@ -136,9 +137,12 @@ class sudo (
   # but not registered as a package. Ensuring the package to
   # be absent won't do any harm and makes sure the resource
   # Package['sudo'] is available for dependencies
-  $package_ensure = $::operatingsystem ? {
-    /(?i:Solaris)/ => 'absent',
-    default        => 'present',
+  $package_ensure = $version ? {
+    ''      => $::operatingsystem ? {
+      /(?i:Solaris)/ => 'absent',
+      default        => 'present',
+    },
+    default => $version,
   }
 
   ### Managed resources
