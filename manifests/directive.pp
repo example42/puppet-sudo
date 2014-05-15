@@ -48,6 +48,11 @@ define sudo::directive (
     default   => inline_template('<%= [@content].flatten.join("\n") + "\n" %>'),
   }
 
+  $manage_syntax_check = $ensure ? {
+    'present' => Exec["sudo-syntax-check for file ${dname}"],
+    default   => undef,
+  }
+
 
   if $sudo::config_dir {
     $base_name = "${sudo::config_dir}/${order}_${dname}"
@@ -59,19 +64,22 @@ define sudo::directive (
         mode    => $sudo::config_file_mode,
         content => $manage_content,
         source  => $manage_source,
-        notify  => Exec["sudo-syntax-check for file ${dname}"],
+        notify  => $manage_syntax_check,
         require => Package['sudo'];
 
       # Remove the .broken file which can be left over by the sudo-syntax-check.
       # This runs intentionally before the syntax-check to leave the file around for debugging.
       "${base_name}.broken":
         ensure => absent,
-        before => Exec["sudo-syntax-check for file ${dname}"];
+        before => $manage_syntax_check,
     }
-    exec { "sudo-syntax-check for file ${dname}":
-      command     => "visudo -c -f ${base_name} || ( mv -f ${base_name} ${base_name}.broken && exit 1 )",
-      refreshonly => true,
-      path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+
+    if $ensure == 'present' {
+      exec { "sudo-syntax-check for file ${dname}":
+        command     => "visudo -c -f ${base_name} || ( mv -f ${base_name} ${base_name}.broken && exit 1 )",
+        refreshonly => true,
+        path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+      }
     }
 
   } else {
