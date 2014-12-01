@@ -69,5 +69,6 @@ class sudo::params {
   $debug = false
   $audit_only = false
   $version = ''
+  $directives = {}
 
 }

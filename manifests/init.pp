@@ -103,7 +103,8 @@ class sudo (
   $config_file_mode    = params_lookup( 'config_file_mode' ),
   $config_file_owner   = params_lookup( 'config_file_owner' ),
   $config_file_group   = params_lookup( 'config_file_group' ),
-  $version             = params_lookup( 'version' )
+  $version             = params_lookup( 'version' ),
+  $directives          = params_lookup( 'directives' )
   ) inherits sudo::params {
 
   $bool_source_dir_purge=any2bool($source_dir_purge)
@@ -199,6 +200,11 @@ class sudo (
 
   }
 
+  ### Create instances for integration with Hiera
+  if $directives != {} {
+    validate_hash($directives)
+    create_resources(sudo::directive, $directives)
+  }
 
   ### Include custom class if $my_class is set
   if $sudo::my_class {
