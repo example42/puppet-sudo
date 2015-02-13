@@ -54,7 +54,7 @@ define sudo::directive (
   }
 
 
-  if $sudo::config_dir {
+  if $sudo::config_dir and $sudo::config_dir != '' {
     $base_name = "${sudo::config_dir}/${order}_${dname}"
     file {
       $base_name:
