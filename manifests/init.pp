@@ -152,7 +152,7 @@ class sudo (
     name   => $sudo::package,
   }
 
-  if $sudo::config_dir {
+  if $sudo::config_dir and $sudo::config_dir != '' {
     file { 'sudo.conf':
       ensure  => 'present',
       path    => $sudo::config_file,
@@ -167,7 +167,7 @@ class sudo (
     }
 
     # The whole sudo configuration directory can be recursively overriden
-    if $sudo::source_dir {
+    if $sudo::source_dir and $sudo::source_dir != '' {
       file { 'sudo.dir':
         ensure  => directory,
         path    => $sudo::config_dir,
@@ -207,7 +207,7 @@ class sudo (
   }
 
   ### Include custom class if $my_class is set
-  if $sudo::my_class {
+  if $sudo::my_class and $sudo::my_class != '' {
     include $sudo::my_class
   }
 
