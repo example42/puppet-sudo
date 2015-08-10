@@ -13,6 +13,7 @@ describe 'sudo' do
       :lsbdistcodename => 'Jessie'
   } }
 
+  it { should compile }
   it { should contain_class('sudo') }
 
 end
