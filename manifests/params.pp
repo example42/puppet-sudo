@@ -36,9 +36,9 @@ class sudo::params {
       /^5.[01234]/ => false,
       default      => '/etc/sudoers.d',
     },
-    /(?i:FreeBSD)/  => '/usr/local/etc/sudoers.d',
-    /(?i:XenServer)/ => false,
-    default         => '/etc/sudoers.d',
+    /(?i:FreeBSD)/                  => '/usr/local/etc/sudoers.d',
+    /(?i:XenServer)/                => false,
+    default                         => '/etc/sudoers.d',
   }
 
   $config_file = $::operatingsystem ? {
