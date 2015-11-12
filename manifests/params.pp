@@ -37,6 +37,7 @@ class sudo::params {
       default      => '/etc/sudoers.d',
     },
     /(?i:FreeBSD)/  => '/usr/local/etc/sudoers.d',
+    /(?i:XenServer)/ => false,
     default         => '/etc/sudoers.d',
   }
 
