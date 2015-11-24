@@ -32,9 +32,9 @@ class sudo::params {
       default => '/etc/sudoers.d',
     },
     /(?i:RedHat|Centos|Scientific)/ => $::operatingsystemrelease ? {
-      /^4/         => false,
-      /^5.[01234]/ => false,
-      default      => '/etc/sudoers.d',
+      /^4/          => false,
+      /^5.[01234]$/ => false,
+      default       => '/etc/sudoers.d',
     },
     /(?i:FreeBSD)/                  => '/usr/local/etc/sudoers.d',
     /(?i:XenServer)/                => false,
