@@ -56,7 +56,7 @@ The configuration of the sudoers file(s) can be done following different approch
           content => "jenkins ALL=NOPASSWD: /usr/sbin/puppi \n", # Double quotes and newline (\n) are needed here
         }
         sudo::directive { 'developers':
-          content => "template('example42/sudo/developers')", # Here is used a template
+          content => template('example42/sudo/developers'), # Here is used a template
         }
         sudo::directive { 'joe':
           source => 'puppet:///modules/example42/sudo/sudo-joe', # Here is used a static source
