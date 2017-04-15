@@ -44,7 +44,7 @@ define sudo::directive (
 
   # add a line break at the end, as missing that can make the file invalid
   $manage_content = $content ? {
-    ''        => undef,
+    ''        => $name,
     default   => inline_template('<%= [@content].flatten.join("\n") + "\n" %>'),
   }
 
