@@ -186,12 +186,12 @@ class sudo (
 
     # Basic /etc/sudoers header for old versions of sudo ( < 1.7.2 )
     concat { $sudo::config_file:
-      mode  => $sudo::config_file_mode,
-      owner => $sudo::config_file_owner,
-      group => $sudo::config_file_group,
+      ensure  => present,
+      mode    => $sudo::config_file_mode,
+      owner   => $sudo::config_file_owner,
+      group   => $sudo::config_file_group,
     }
     concat::fragment { 'sudoers_head':
-      ensure  => present,
       order   => '01',
       target  => $sudo::config_file,
       content => template('sudo/sudoers_head.erb'),
