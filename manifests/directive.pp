@@ -85,7 +85,6 @@ define sudo::directive (
   } else {
 
     concat::fragment { $dname:
-      ensure  => $ensure,
       order   => $order,
       target  => $sudo::config_file,
       content => "${manage_content}\n",
